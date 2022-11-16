@@ -1,0 +1,26 @@
+<module op_part (
+    input [7:0] s, a,
+    input clk, tot_ld, tot_clr,
+    output logic tot_lt_s
+);
+
+    logic [7:0] tot;
+        always_ff@(posedge clk)
+            begin
+                if (tot_clr)
+                    tot <= 0;
+                else
+                    if (tot_ld)
+                        tot <= tot + a;
+             end
+        always_comb  
+            begin
+                if (tot < 0)
+                    tot_lt_s <= 1;
+                else
+                    tot_lt_s <= 0
+            end
+
+        end
+
+endmodule

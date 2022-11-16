@@ -1,0 +1,43 @@
+<module control_part (
+
+    input clk, rst, tot_lt_s,
+    output logic tot_clr, tot_ld, d
+);
+
+    typedef enum logic [1:0] {inicio, esperar, somar, fornecer} state_t;
+        state_t state;
+        always_ff@(posedge clk, posedge rst)
+            begin
+                if (rst)
+                    state <= inicio;
+                else begin
+                    case (state)
+
+                        inicio : begin
+                        d <= 0;
+                        tot_clr <= 1;
+                        state <= esperar;
+                    end
+
+                    esperar: begin
+                        tot_clr <= 0;
+                        tot_ld <= 0;
+                        if (c)
+                            state <= somar;
+                        else begin
+                            if (~tot_lt_s)
+                            state <= fornecer;
+                        end
+                    end
+                    somar: begin
+                        tot_ld <= 1;
+                        state <= esperar;
+                    end
+                    fornecer: begin
+                        d <= 1;
+                        state <= inicio
+                        tot_clr <= 1;
+                    end
+            endcase
+        end
+endmodule

@@ -1,0 +1,11 @@
+<module top_level (
+    input clk , rst, c,
+    input [7:0] s, a,
+    output logic d
+);
+    logic tot_ld, tot_clr, tot_lt_s;
+
+    op_part op01 (.*);
+    control_part ctrl01 (.*);
+
+endmodule
